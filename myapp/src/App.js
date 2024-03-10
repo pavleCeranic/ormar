@@ -1,8 +1,12 @@
 import './App.css';
+import Heading from './Heading';
 
 function App() {
   return (
-    <div></div>
+	<div className=''>
+	<Heading />
+	</div>
+	
   );
 }
 
