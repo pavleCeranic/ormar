@@ -8,7 +8,7 @@ function Heading() {
 				Logo
 			</Link>
 			<Menu label="Collections" items={['Item 1', 'Item 2', 'Item 3']} />
-			<Link to="/account" className='self-center text-center m-5 w-36 hover:font-bold transition-all duration-200 ease-in-out hover:bg-gray-300'>
+			<Link to="/account" className='self-center text-center m-5 w-36 hover:font-bold transition-all duration-200 ease-in-out'>
 				Account
 			</Link>
 		</div>
@@ -18,7 +18,7 @@ function Heading() {
 const Menu = ({ label, items }) => {
 	return (
 		<div className="self-center relative group">
-			<span className="text-center m-5 w-36 hover:font-bold transition-all duration-200 ease-in-out hover:bg-gray-300">
+			<span className="text-center m-5 w-36 hover:font-bold transition-all duration-200 ease-in-out">
 				{label}
 			</span>
 			<div className="hidden group-hover:block absolute z-10 bg-white p-2 mt-2 space-y-2 shadow">
