@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Heading() {
 	return (
-		<div className='w-full flex justify-between shadow-xl'>
+		<div className='w-full flex justify-between shadow-xl fixed top-0 z-50 bg-white'>
 			<Link to="/" className='self-center text-center m-7 w-36'>
 				Logo
 			</Link>
