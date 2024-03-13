@@ -16,8 +16,8 @@ const BestSellerContainer = () => {
 	]
 
 	return (
-		<div className='flex flex-col w-3/5 justify-center content-center'>
-			<h1 className='flex justify-center text-3xl font-bold'>Best Seller Products</h1>
+		<div className='flex flex-col justify-center items-center'>
+			<h1 className='flex justify-center text-3xl font-bold m-10'>Best Seller Products</h1>
 			<div className='grid grid-cols-4'>
 				{items.map((item, index) => (
 					<Card key={index} label={item.label} price={item.price}/>

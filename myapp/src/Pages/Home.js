@@ -6,7 +6,7 @@ import CarouselContainer from '../CarouselContainer.js';
 function Home() {
 
 	return (
-		<div className='flex flex-col items-center'>
+		<div className=''>
 			<CarouselContainer />
 			<BestSellerContainer />
 		</div>

@@ -3,16 +3,17 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const Carousel = () => {
+const CarouselContainer = () => {
 
 	const settings = {
 		infinite: true,
 		speed: 1500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		adaptiveHeight: true,
+		adaptiveHeight: false,
 		autoplay: true,
 		autoplaySpeed: 4333,
+		variableHeight: true
 	};
 
 	const placeholders = [
@@ -23,7 +24,7 @@ const Carousel = () => {
 	]
 
 	return (
-		<div className='h-3/5 w-full'>
+		<div className=''>
 			<Slider {...settings}>
 				{placeholders.map((placeholder, index) => (
 					<div key={index} className={`${placeholder} h-96 w-full`}>
@@ -34,4 +35,4 @@ const Carousel = () => {
 	);
 };
 
-export default Carousel;
+export default CarouselContainer;
