@@ -7,7 +7,7 @@ import Heading from './Heading.js';
 
 function App() {
 	return (
-		<div className=''>
+		<div className='overflow-x-hidden'>
 			<BrowserRouter>
 				<Heading />
 				<Routes>

@@ -1,11 +1,13 @@
 import React from 'react';
 import './Home.css';
-import Card from '../Card.js'
 import BestSellerContainer from '../BestSellerContainer.js';
+import CarouselContainer from '../CarouselContainer.js';
 
 function Home() {
+
 	return (
-		<div className='flex justify-center'>
+		<div className='flex flex-col items-center'>
+			<CarouselContainer />
 			<BestSellerContainer />
 		</div>
 	);
