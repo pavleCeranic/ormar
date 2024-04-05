@@ -10,6 +10,8 @@ module.exports = {
 			},
 			colors: {
 				yellow: '#FFFBEB',
+				inactiveGrey: '#d3d3d3',
+				buttonYellow: '#FFD700',
 				'myColorGrey': '#F5EEE6',
 				'myColorBeige': '#FFF8E3',
 				'myColorBrown': '#F3D7CA',
