@@ -27,7 +27,7 @@ const CarouselContainer = () => {
 		<div className=''>
 			<Slider {...settings}>
 				{placeholders.map((placeholder, index) => (
-					<div key={index} className={`${placeholder} h-96 w-full`}>
+					<div key={index} className={`${placeholder} h-[75vh] w-full`}>
 					</div>
 				))}
 			</Slider>

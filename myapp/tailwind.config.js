@@ -1,10 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
-		'./src/*.{js,ts,jsx,tsx}', // Include JavaScript and TypeScript files in the src directory
+		'./src/**/*.{js,ts,jsx,tsx,mdx}', // Include JavaScript and TypeScript files in the src directory
 	],
 	theme: {
 		extend: {
+			height: {
+
+			},
 			colors: {
 				yellow: '#FFFBEB',
 				'myColorGrey': '#F5EEE6',
@@ -18,6 +21,9 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	 plugins: [
+    require('tailwindcss'),
+    require('autoprefixer')
+  ],
 }
 
