@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
-import BestSellerContainer from '../BestSellerContainer.js';
-import CarouselContainer from '../CarouselContainer.js';
+import BestSellerContainer from '../Components/BestSellerContainer.js';
+import CarouselContainer from '../Components/CarouselContainer.js';
 
 function Home() {
 

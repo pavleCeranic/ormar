@@ -1,5 +1,5 @@
 import './Card.css';
-import img from './stolica_placeholder.png'
+import img from '../stolica_placeholder.png'
 
 const Card = (props) => {
 
