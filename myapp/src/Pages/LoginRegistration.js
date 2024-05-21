@@ -20,15 +20,18 @@ const LoginRegistration = () => {
 	const [loginFormData, setLoginFormData] = useState(initialState);
 	const [regFormData, setRegFormData] = useState(initialState);
 
-	const handleTabClick = (activeTab, notActiveTab) => {
+	const handleTabClick = (newActiveTab, oldActiveTab, skip = false) => {
 
-		setActiveTab(activeTab === firstDivRef ? 'login' : '');
+		setActiveTab(newActiveTab === firstDivRef ? 'login' : '');
 
-		if (activeTab && notActiveTab) {
-			activeTab.current.style.backgroundColor = 'white';
-			notActiveTab.current.style.backgroundColor = '#d3d3d3';
+		if (newActiveTab && oldActiveTab) {
+			newActiveTab.current.style.backgroundColor = 'white';
+			oldActiveTab.current.style.backgroundColor = '#d3d3d3';
 
-			// validateEmail(emailRef.current.value);
+			if (skip) return;
+			validateEmail(emailRef, true);
+
+			// emailRef.current.style.outline = '';
 		}
 	};
 
@@ -56,38 +59,53 @@ const LoginRegistration = () => {
 	};
 
 	useEffect(() => {
-
 		// decide if user is loged in or not and direct user to Account or stay here to login/register
 
-		handleTabClick(firstDivRef, secondDivRef);
+		handleTabClick(firstDivRef, secondDivRef, true);
 	}, []);
 
-	const validateEmail = (e) => {
+	const validateEmail = (e, fromTabClick = false) => {
+
+
+		// everything looks good but when you set focus on email and click to navigate other tab than the validation is called from onBlur event and is validating the field of the current tab and calling styles but in the meantime switching tab takes place so that style aplied is actualy on the field on the newly navigated tab
+		let myTarget
+
+		fromTabClick
+			? myTarget = e.current
+			: myTarget = e.target;
 
 		setTimeout(() => {
-			if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target?.value)) {
+
+			if (fromTabClick && myTarget.style?.outline === '') {
+				//when switching between tabs and no fields are touched
+				return
+			}
+
+			if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(myTarget?.value)) {
 				// alert user that email is not valid
 
-				if (e.target.style.outline !== 'red solid 1px') {
-					e.target.classList.add('wiggle');
-					e.target.classList.add('myoutline');
+				if (myTarget.style.outline !== 'red solid 1px') {
+					myTarget.classList.add('wiggle');
+					myTarget.classList.add('myoutline');
 
 					setTimeout(() => {
-						e.target.classList.remove('wiggle');
+						myTarget.classList.remove('wiggle');
 					}, 200);
 				}
 
-				e.target.style.outline = 'red solid 1px';
+				myTarget.style.outline = 'red solid 1px';
 
-				return;
+
 			}
-			else {
-				e.target.style.outline = 'green solid 1px';
+			else if (myTarget.style.outline !== '') {
+				myTarget.style.outline = 'green solid 1px';
 				setTimeout(() => {
-					// e.target.style.outline = '';
+					myTarget.style.outline = '';
 				}, 2000);
 			}
 		}, 1000);
+
+
 
 	}
 
