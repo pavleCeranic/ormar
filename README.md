@@ -13,6 +13,7 @@ Create a bookmark folder named 'ORMAR' and put some basic links that will be nee
 
    -  GITHUB PULL REQUESTS: https://github.com/pavleCeranic/ormar/pulls
    -  GITHUB PROJECT BOARD: https://github.com/users/pavleCeranic/projects/2 
+   -  PROJECT BOARD ON CLICKUP: https://app.clickup.com/9015672931/v/b/li/901505059597
 
 Getting up to speed:
 
