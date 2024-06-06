@@ -1,10 +1,10 @@
-import React from 'react';
+import './Account.css';
 
-function Account() {
+const Account = () => {
+
 	return (
-		<div className=''>
-		</div>
-	);
+		<div>here</div>
+	)
 }
 
 export default Account;
