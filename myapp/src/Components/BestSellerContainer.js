@@ -5,14 +5,14 @@ import Card from './Card.js'
 const BestSellerContainer = () => {
 
 	const items = [
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'},
-		{label: 'stolica', price: '59.55'}
+		{label: 'Stolica', price: '21.55'},
+		{label: 'Barska Stolica', price: '59.55'},
+		{label: 'Kafanska Stolica', price: '82.55'},
+		{label: 'Fotelja', price: '20.00'},
+		{label: 'Sofa', price: '52.55'},
+		{label: 'Trosjed', price: '59.55'},
+		{label: 'Namjestaj Stolica Fotelja', price: '59.55'},
+		{label: 'Najobicnija stolica iz nekog salona', price: '59.55'}
 	]
 
 	return (
