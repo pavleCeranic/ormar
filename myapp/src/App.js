@@ -6,6 +6,7 @@ import LoginRegistration from './Pages/LoginRegistration.js';
 import Heading from './Components/Heading.js';
 import Footer from './Components/Footer.js';
 import Article from './Pages/Article.js';
+import Account from './Pages/Account.js';
 
 function App() {
 	return (
@@ -14,8 +15,9 @@ function App() {
 				<Heading />
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/account" element={<LoginRegistration />} />
+					<Route path="/register" element={<LoginRegistration />} />
 					<Route path="/article" element={<Article />} />
+					<Route path="/account" element={<Account />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
