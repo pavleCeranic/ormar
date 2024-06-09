@@ -8,7 +8,7 @@ function Home() {
 	return (
 		<div className=''>
 			<CarouselContainer />
-			<BestSellerContainer />
+			<BestSellerContainer  title='Best Seller'/>
 		</div>
 	);
 }
