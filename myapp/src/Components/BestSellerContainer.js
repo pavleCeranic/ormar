@@ -2,7 +2,7 @@ import './BestSellerContainer.css';
 import Card from './Card.js'
 // import myImg from './stolica_placeholder.png'
 
-const BestSellerContainer = () => {
+const BestSellerContainer = (props) => {
 
 	const items = [
 		{label: 'Stolica', price: '21.55'},
@@ -16,8 +16,8 @@ const BestSellerContainer = () => {
 	]
 
 	return (
-		<div className='flex flex-col justify-center items-center'>
-			<h1 className='flex justify-center text-3xl font-bold m-10'>Best Seller Products</h1>
+		<div className='flex flex-col justify-center items-center z-20'>
+			{props.title === '' ? '' : <h1 className='flex justify-center text-3xl font-bold m-10'>{props.title}</h1>}
 			<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
 				{items.map((item, index) => (
 					<Card key={index} label={item.label} price={item.price}/>

@@ -1,6 +1,6 @@
 import './LoginRegistration.css';
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 
 
@@ -12,6 +12,7 @@ const LoginRegistration = () => {
 		password: ''
 	}
 
+	const navigate = useNavigate();
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
 	const emailRef = useRef(null);
@@ -139,6 +140,8 @@ const LoginRegistration = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		navigate('/account')
 
 		// console.log('e', formData)
 		// axios.post('___', formData)
