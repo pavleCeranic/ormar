@@ -3,20 +3,27 @@ package com.example.demo.service;
 import com.example.demo.model.Article;
 import com.example.demo.repository.ArticleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ArticleService {
-    private final ArticleRepository articleRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
     public List<Article> getAllArticles() {
         return articleRepository.findAll();
+    }
+
+    public Optional<Article> findById(Long id) {
+        return articleRepository.findById(id);
     }
 
     public boolean createArticle(Article article) {
@@ -27,6 +34,16 @@ public class ArticleService {
             System.out.println("Error while saving Building object: " + e.getMessage());
             return false;
         }
+    }
+
+    public boolean deleteById(Long id) {
+        try {
+            articleRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
 }
