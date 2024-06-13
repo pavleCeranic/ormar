@@ -10,25 +10,75 @@ import img5 from '../artiklslike/img5.jpg'
 import img6 from '../artiklslike/img6.jpg'
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../App.css';
-// import axios from 'axios';
+import axios from 'axios';
+
+export const getArticles = async () => {
+	try {
+		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + 'getAll');
+		console.log(response.data)
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching articles', error);
+		throw error;
+	}
+};
+
+export const getArticleById = async (id) => {
+	try {
+
+		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + id);
+		console.log(response.data);
+		return response.data;
+	} catch (error) {
+		console.error(`Error fetching article with id ${id}`, error);
+		throw error;
+	}
+};
+
+export const createArticle = async (article) => {
+	try {
+		const response = await axios.post(process.env.REACT_APP_API_ARTICLE_URL + 'create', article);
+		debugger
+		return response.data;
+	} catch (error) {
+		console.error('Error creating article', error);
+		throw error;
+	}
+};
+
+export const deleteArticle = async (id) => {
+	try {
+		await axios.delete(process.env.REACT_APP_API_ARTICLE_URL, id);
+	} catch (error) {
+		console.error(`Error deleting article with id ${id}`, error);
+		throw error;
+	}
+};
 
 const Article = () => {
 
 	const location = useLocation();
 	const navigate = useNavigate();
+	const [article, setArticle] = useState({});
+	const owns = true; // is the user owner of the article that is displayed TODO: dynamicly seting
 
 	useEffect(() => {
 		setTimeout(() => {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}, 150);
 
-		// axios.get('getArticle&' + {itemId})
-		// 	.then(response => {
-		// fill the article object
-		// 	})
-		// 	.catch(error => {
+		const fetchArticle = async () => {
+			try {
+				const fetchedArticle = await getArticleById(location.state.id);
+				setArticle(fetchedArticle);
+			} catch (error) {
+				console.error(`Error fetching article with id number: ${location.state.id}`, error);
 
-		// 	});
+			}
+		}
+
+		fetchArticle();
+
 	}, []);
 
 	const handleClick = () => {
@@ -41,13 +91,17 @@ const Article = () => {
 				<ArticleImages />
 			</div>
 			<div id='detailsContainer' className='w-1/6 ml-10 h-3/5'>
-				<div className='text-3xl'>{location.state.label || 'Article Name'}</div> { /*ne moze pisati Article Name, u slucaju greske ne smije se otvoriti, ishendlati ranije*/}
-				<div>{location.state.price + ' KM' || 'Cijena Nije Navedena'}</div>
+				<div className='text-3xl'>{location.state.label}</div>
+				<div>{location.state.price && location.state.price !== 0 ? location.state.price + ' KM' : 'Cijena Nije Navedena'}</div>
 				<br />
-				<div>Article Description</div>
-				<div> X Banja Luka</div>
-				<div> Size M</div>
-				<div> Kategorija</div>
+				<div> X {article.city}</div>
+				<div> Size {article.size}</div>
+				<div> {article.category}</div>
+				<div> {article.condition}</div>
+				<div> {article.color}</div>
+				<div> {article.brand}</div>
+				<div> {article.description}</div>
+				<div> {article.materials}</div>
 				<br />
 				<div className='w-full h-16 shadow-lg flex flex-row rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
 					<div className=' w-10 h-10 rounded-3xl  bg-black m-4 mb-0'></div>
@@ -57,6 +111,7 @@ const Article = () => {
 					</div>
 				</div>
 			</div>
+			{owns && <UserActions id={article.id} />}
 		</div>
 	);
 }
@@ -108,6 +163,22 @@ const ArticleImages = () => {
 			</div>
 		</div>
 	);
+}
+
+const UserActions = (props) => {
+
+	const handleDelete = () => {
+		deleteArticle(props.id);
+	}
+
+	return (
+		<div className='flex flex-col h-[20vh] w-[20vw] bg-yellow '>
+			<button className=' shadow-sm' onClick={handleDelete}>Obrisi</button>
+			<button className=' shadow-sm'>Uredi</button>
+			<button className=' shadow-sm'>Zavrsi prodaju</button>
+
+		</div>
+	)
 }
 
 export default Article;

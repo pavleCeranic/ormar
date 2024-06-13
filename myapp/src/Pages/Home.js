@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.css';
-import BestSellerContainer from '../Components/BestSellerContainer.js';
+import ArticleGroupContainer from '../Components/ArticleGroupContainer.js';
 import CarouselContainer from '../Components/CarouselContainer.js';
 
 function Home() {
@@ -8,7 +8,7 @@ function Home() {
 	return (
 		<div className=''>
 			<CarouselContainer />
-			<BestSellerContainer title='Best Seller'/>
+			<ArticleGroupContainer title='Izdvojeno za tebe'/>
 		</div>
 	);
 }

@@ -6,7 +6,7 @@ const Card = (props) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate('/article', { state: { label: props.label, price: props.price} });
+		navigate('/article', { state: { label: props.label, price: props.price, id: props.id} });
 	}
 
 	return (

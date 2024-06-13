@@ -1,5 +1,5 @@
 import './Account.css';
-import BestSellerContainer from '../Components/BestSellerContainer.js'
+import ArticleGroupContainer from '../Components/ArticleGroupContainer.js'
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
@@ -22,10 +22,10 @@ const Account = (props) => {
 	}
 
 	useEffect(() => {
-		
+
 		// axios.get('getUser&' + {userId})
 		// 	.then(response => {
-		// 	handle data 
+		// 	handle data
 		// 	})
 		// 	.catch(error => {
 
@@ -56,7 +56,7 @@ const Account = (props) => {
 				</div>
 				<div className='overflow-hidden h-full mt-3'>
 					{activeTab === 'ormar' ?
-						<BestSellerContainer title='' />
+						<ArticleGroupContainer title='' />
 						: <Reviews />
 					}
 				</div>
