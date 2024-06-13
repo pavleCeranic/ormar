@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 function Heading() {
 	return (
-		<div className='w-full flex justify-between shadow-xl h-22 fixed top-0 z-50 bg-white'>
-			<Link to="/" className='self-center text-center m-7 w-36'>
+		<div className='w-full flex justify-between shadow-xl h-[8vh] fixed top-0 z-50 bg-white'>
+			<Link to="/" className='self-center text-center m-7 w-[10vw]'>
 				Logo
 			</Link>
 			<Menu label="Collections" items={['Item 1', 'Item 2', 'Item 3']} />
-			<Link to="/register" className='self-center text-center m-7 w-36 hover:font-bold transition-all duration-200 ease-in-out'>
+			<Link to="/register" className='self-center text-center m-7 w-[10vw] hover:font-bold transition-all duration-200 ease-in-out'>
 				Account
 			</Link>
 		</div>

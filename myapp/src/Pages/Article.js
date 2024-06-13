@@ -48,7 +48,7 @@ export const createArticle = async (article) => {
 
 export const deleteArticle = async (id) => {
 	try {
-		await axios.delete(process.env.REACT_APP_API_ARTICLE_URL, id);
+		await axios.delete(process.env.REACT_APP_API_ARTICLE_URL + id);
 	} catch (error) {
 		console.error(`Error deleting article with id ${id}`, error);
 		throw error;
@@ -167,16 +167,32 @@ const ArticleImages = () => {
 
 const UserActions = (props) => {
 
+	const navigate = useNavigate();
+
 	const handleDelete = () => {
+
 		deleteArticle(props.id);
+		navigate(-1);
+
+	}
+
+	const handleEdit = () => {
+
+		// edit 
+
+	}
+
+	const handleFinish = () => {
+
+		// finish 
+
 	}
 
 	return (
-		<div className='flex flex-col h-[20vh] w-[20vw] bg-yellow '>
-			<button className=' shadow-sm' onClick={handleDelete}>Obrisi</button>
-			<button className=' shadow-sm'>Uredi</button>
-			<button className=' shadow-sm'>Zavrsi prodaju</button>
-
+		<div className='flex flex-col h-[15vh] w-[20vw] shadow-lg rounded-md text-center ml-10'>
+			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-lime-300' onClick={handleEdit}>Uredi</div>
+			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleFinish}>Zavrsi prodaju</div>
+			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleDelete}>Obrisi</div>
 		</div>
 	)
 }
