@@ -86,11 +86,9 @@ const Article = () => {
 	}
 
 	return (
-		<div className='flex flex-row content-center justify-center mb-28 mt-44'>
-			<div id='imagesContainer' className=''>
-				<ArticleImages />
-			</div>
-			<div id='detailsContainer' className='w-1/6 ml-10 h-3/5'>
+		<div className='flex flex-wrap w-11/12 content-center self-center justify-center mb-28 mt-16 lg:w-5/6'>
+			<ArticleImages />
+			<div id='detailsContainer' className='w-full self-center h-3/5 md:w-1/2 lg:w-1/3'>
 				<div className='text-3xl'>{location.state.label}</div>
 				<div>{location.state.price && location.state.price !== 0 ? location.state.price + ' KM' : 'Cijena Nije Navedena'}</div>
 				<br />
@@ -103,13 +101,14 @@ const Article = () => {
 				<div> {article.description}</div>
 				<div> {article.materials}</div>
 				<br />
-				<div className='w-full h-16 shadow-lg flex flex-row rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
+				<div className='flex flex-row self-center w-full h-16 sm:w-full sm:self-center lg:w-full shadow-lg rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
 					<div className=' w-10 h-10 rounded-3xl  bg-black m-4 mb-0'></div>
 					<div className='flex flex-col justify-center'>
 						<div className='text-lg'>Svetozar Markovic</div>
 						<div className='text-xs'>Online</div>
 					</div>
 				</div>
+				<br />
 			</div>
 			{owns && <UserActions id={article.id} />}
 		</div>
@@ -142,12 +141,12 @@ const ArticleImages = () => {
 	}
 
 	return (
-		<div className='flex flex-row w-full h-full'>
-			<div className='flex flex-col h-96 w-full overflow-y-auto no-scrollbar z-10'>
+		<div className='flex flex-col-reverse sm:flex-row w-full md:w-1/2 lg:w-1/3'>
+			<div className='flex flex-row h-1/6 w-full overflow-x-auto no-scrollbar z-10 sm:flex-col sm:overflow-y-auto sm:h-96 sm:w-1/6 md:w-3/12 lg:w-3/12'>
 				{imagesStore.length > 0 ? (
 					imagesStore.map((image, index) => {
 						return (
-							<div key={index} className='bg-black w-20 h-20 m-1 z-0 rounded-lg'>
+							<div key={index} className='flex-shrink-0 bg-black w-20 h-20 m-1 z-0 rounded-lg'>
 								{makeAnImage(image.props.className, image.props.src, image.props.alt, changeImage)}
 							</div>
 						);
@@ -158,7 +157,7 @@ const ArticleImages = () => {
 				)}
 			</div>
 
-			<div className='flex h-96 w-96 pl-2'>
+			<div className=' flex-shrink-0 flex h-96 w-full sm:w-5/6 md:w-9/12 lg:w-9/12'>
 				<div id='img4' className='h-96 w-96 p-1 rounded-lg'>{highlightImage}</div>
 			</div>
 		</div>
@@ -178,18 +177,18 @@ const UserActions = (props) => {
 
 	const handleEdit = () => {
 
-		// edit 
+		// edit
 
 	}
 
 	const handleFinish = () => {
 
-		// finish 
+		// finish
 
 	}
 
 	return (
-		<div className='flex flex-col h-[15vh] w-[20vw] shadow-lg rounded-md text-center ml-10'>
+		<div className='flex flex-col h-28 w-full shadow-lg rounded-md text-center self-center sm:w-[60vw] sm:min-w-48 sm:self-auto lg:w-1/5'>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-lime-300' onClick={handleEdit}>Uredi</div>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleFinish}>Zavrsi prodaju</div>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleDelete}>Obrisi</div>
