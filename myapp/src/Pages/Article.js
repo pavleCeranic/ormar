@@ -86,9 +86,9 @@ const Article = () => {
 	}
 
 	return (
-		<div className='flex flex-wrap w-11/12 content-center self-center justify-center mb-28 mt-16 lg:w-5/6'>
+		<div className='flex flex-wrap w-11/12 h-max self-center content-center justify-center lg:w-6/6 lg:items-start mt-16'>
 			<ArticleImages />
-			<div id='detailsContainer' className='w-full self-center h-3/5 md:w-1/2 lg:w-1/3'>
+			<div id='detailsContainer' className='flex flex-col w-full self-center md:w-1/3 lg:w-1/3 md:self-start md:pl-2 md:pt-2 xl:w-1/3 xl:ml-5'>
 				<div className='text-3xl'>{location.state.label}</div>
 				<div>{location.state.price && location.state.price !== 0 ? location.state.price + ' KM' : 'Cijena Nije Navedena'}</div>
 				<br />
@@ -101,7 +101,7 @@ const Article = () => {
 				<div> {article.description}</div>
 				<div> {article.materials}</div>
 				<br />
-				<div className='flex flex-row self-center w-full h-16 sm:w-full sm:self-center lg:w-full shadow-lg rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
+				<div className='flex flex-row self-center w-full h-16 sm:w-full sm:self-center lg:w-72 lg:self-start shadow-lg rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
 					<div className=' w-10 h-10 rounded-3xl  bg-black m-4 mb-0'></div>
 					<div className='flex flex-col justify-center'>
 						<div className='text-lg'>Svetozar Markovic</div>
@@ -141,12 +141,12 @@ const ArticleImages = () => {
 	}
 
 	return (
-		<div className='flex flex-col-reverse sm:flex-row w-full md:w-1/2 lg:w-1/3'>
-			<div className='flex flex-row h-1/6 w-full overflow-x-auto no-scrollbar z-10 sm:flex-col sm:overflow-y-auto sm:h-96 sm:w-1/6 md:w-3/12 lg:w-3/12'>
+		<div className='flex flex-col-reverse mt-2 sm:flex-row sm:w-max w-full md:w-2/3 lg:w-1/2 xl:w-1/3 '>
+			<div className='flex flex-row h-1/6 w-full overflow-x-auto no-scrollbar z-10 sm:flex-col sm:overflow-y-auto sm:h-96 sm:w-1/6 md:w-3/12 lg:w-3/12 lg:items-end'>
 				{imagesStore.length > 0 ? (
 					imagesStore.map((image, index) => {
 						return (
-							<div key={index} className='flex-shrink-0 bg-black w-20 h-20 m-1 z-0 rounded-lg'>
+							<div key={index} className='flex-shrink-0 bg-black w-16 h-16 m-1 z-0 rounded-lg'>
 								{makeAnImage(image.props.className, image.props.src, image.props.alt, changeImage)}
 							</div>
 						);
@@ -188,7 +188,7 @@ const UserActions = (props) => {
 	}
 
 	return (
-		<div className='flex flex-col h-28 w-full shadow-lg rounded-md text-center self-center sm:w-[60vw] sm:min-w-48 sm:self-auto lg:w-1/5'>
+		<div className='flex flex-col h-28 w-full shadow-lg mb-5 rounded-md text-center self-center sm:w-[60vw] sm:min-w-48 sm:self-auto md:mt-5'>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-lime-300' onClick={handleEdit}>Uredi</div>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleFinish}>Zavrsi prodaju</div>
 			<div className=' shadow-sm cursor-pointer w-full h-full content-center hover:bg-red-300' onClick={handleDelete}>Obrisi</div>
