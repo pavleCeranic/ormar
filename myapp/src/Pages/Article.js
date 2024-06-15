@@ -38,8 +38,7 @@ export const getArticleById = async (id) => {
 export const createArticle = async (article) => {
 	try {
 		const response = await axios.post(process.env.REACT_APP_API_ARTICLE_URL + 'create', article);
-		debugger
-		return response.data;
+		return response;
 	} catch (error) {
 		console.error('Error creating article', error);
 		throw error;

@@ -10,6 +10,7 @@ const Account = (props) => {
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('ormar');
+	const navigate = useNavigate();
 
 	const handleTabChange = (newActiveTab, oldActiveTab) => {
 
@@ -44,9 +45,9 @@ const Account = (props) => {
 					<div> X Banjaluka</div>
 					<div>Posljednji put vidjen u 13:44</div>
 				</div>
-				<div>
-					<div></div>
-					<button>Edit account</button>
+				<div className='flex flex-col'>
+					<button onClick={()=>{navigate('/publishnewarticle')}} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
+					<button className='hover:bg-black hover:bg-opacity-10'>Edit account</button>
 				</div>
 			</div>
 			<div className='flex flex-col h-full w-3/5 mb-4 shadow-2xl'>
