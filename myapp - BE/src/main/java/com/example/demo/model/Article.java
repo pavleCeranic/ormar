@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -35,14 +35,15 @@ public class Article {
     private String description;
     @Column(nullable = true)
     private String size; //IMPROVE
-    @Column(nullable = true)
     private LocalDateTime dateAdded;
     @Column(nullable = true)
     private String sex;
+    @ElementCollection
     @Column(nullable = true)
-    private ArrayList<Integer> images;
-    //private String tags;
-    //images
-    //user
+    private List<Integer> images;
 
+    // Constructor
+    public Article() {
+        this.dateAdded = LocalDateTime.now();
+    }
 }

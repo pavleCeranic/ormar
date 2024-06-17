@@ -26,13 +26,12 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
-    public boolean createArticle(Article article) {
+    public Article createArticle(Article article) {
         try {
-            articleRepository.save(article);
-            return true;
+            return articleRepository.save(article);
         } catch (DataAccessException e) {
             System.out.println("Error while saving Building object: " + e.getMessage());
-            return false;
+            throw new RuntimeException("Failed to create article", e);
         }
     }
 

@@ -48,6 +48,22 @@ const PublishNewArticle = () => {
 		'NOVI_TRAVNIK',
 		'ZVORNIK'
 	]
+	const colors = [
+		'Boja',
+		'RED',
+		'BLUE',
+		'GREEN',
+		'YELLOW',
+		'ORANGE',
+		'PURPLE',
+		'BLACK',
+		'WHITE',
+		'GRAY',
+		'PINK',
+		'BROWN',
+		'CYAN',
+		'MAGENTA'
+	];
 
 	const handleInputChange = (e) => {
 
@@ -66,8 +82,8 @@ const PublishNewArticle = () => {
 
 		const requestCreateArticle = async () => {
 			try {
-				const data = await createArticle(articleInfo);
-				navigate('');
+				const response = await createArticle(articleInfo);
+				navigate('/article', { state: { label: response.data.name, price: response.data.price, id: response.data.id, article: response.data } });
 			} catch (error) {
 				console.error('Error creating an article', error);
 			}
@@ -94,8 +110,8 @@ const PublishNewArticle = () => {
 				<option value='UNISEX'>Unisex</option>
 			</select>
 			<select name='city' className='outline-0 shadow-2xl m-2 p-2 w-[80vw] max-w-sm focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' id=''>
-				{cities.map((city, index)=>{
-					return <option key={index} className={city==='Grad' ? 'opacity-20' : ''} value={city}>{city.replace('_', ' ')}</option>
+				{cities.map((city, index) => {
+					return <option key={index} className={city === 'Grad' ? 'opacity-20' : ''} value={city}>{city.replace('_', ' ')}</option>
 				})}
 			</select>
 			<select name='material' className='outline-0 shadow-2xl m-2 p-2 w-[80vw] max-w-sm focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' id=''>
@@ -111,10 +127,9 @@ const PublishNewArticle = () => {
 				<option value="option4">Option 4</option>
 			</select>
 			<select name='color' className='outline-0 shadow-2xl m-2 p-2 w-[80vw] max-w-sm focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' id=''>
-				<option value="option1">Odaberi Boju</option>
-				<option value="option2">Option 2</option>
-				<option value="option3">Option 3</option>
-				<option value="option4">Option 4</option>
+				{colors.map((color, index) => {
+					return <option key={index} value={color}>{color}</option>
+				})}
 			</select>
 			<select name='size' className='outline-0 shadow-2xl m-2 p-2 w-[80vw] max-w-sm focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' id=''>
 				<option value="option1">Odaberi Velicinu</option>

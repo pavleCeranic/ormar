@@ -66,17 +66,22 @@ const Article = () => {
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}, 150);
 
-		const fetchArticle = async () => {
-			try {
-				const fetchedArticle = await getArticleById(location.state.id);
-				setArticle(fetchedArticle);
-			} catch (error) {
-				console.error(`Error fetching article with id number: ${location.state.id}`, error);
+		if (location.state.article) {
+			setArticle(location.state.article);
+		} else {
+			const fetchArticle = async () => {
+				try {
+					const fetchedArticle = await getArticleById(location.state.id);
+					setArticle(fetchedArticle);
+				} catch (error) {
+					console.error(`Error fetching article with id number: ${location.state.id}`, error);
 
+				}
 			}
+
+			fetchArticle();
 		}
 
-		fetchArticle();
 
 	}, []);
 
@@ -90,9 +95,10 @@ const Article = () => {
 			<div id='detailsContainer' className='flex flex-col w-full self-center md:w-1/3 lg:w-1/3 md:self-start md:pl-2 md:pt-2 xl:w-1/3 xl:ml-5'>
 				<div className='text-3xl'>{location.state.label}</div>
 				<div>{location.state.price && location.state.price !== 0 ? location.state.price + ' KM' : 'Cijena Nije Navedena'}</div>
+				<div>Objavljeno {new Date(article.dateAdded).toLocaleString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
 				<br />
-				<div> X {article.city}</div>
-				<div> Size {article.size}</div>
+				<div> X {article.city?.replace('_', ' ')}</div>
+				<div> {article.size}</div>
 				<div> {article.category}</div>
 				<div> {article.condition}</div>
 				<div> {article.color}</div>
