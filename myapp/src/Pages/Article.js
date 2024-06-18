@@ -45,6 +45,16 @@ export const createArticle = async (article) => {
 	}
 };
 
+export const updateArticle = async (article) => {
+	try {
+		const response = await axios.post(process.env.REACT_APP_API_ARTICLE_URL + 'update', article);
+		return response;
+	} catch (error) {
+		console.error('Error updating article', error);
+		throw error;
+	}
+};
+
 export const deleteArticle = async (id) => {
 	try {
 		await axios.delete(process.env.REACT_APP_API_ARTICLE_URL + id);
@@ -115,7 +125,7 @@ const Article = () => {
 				</div>
 				<br />
 			</div>
-			{owns && <UserActions id={article.id} />}
+			{owns && <UserActions id={article.id} article={article} />}
 		</div>
 	);
 }
@@ -183,6 +193,7 @@ const UserActions = (props) => {
 	const handleEdit = () => {
 
 		// edit
+		navigate('/publishnewarticle', { state: { article: props.article } });
 
 	}
 

@@ -17,10 +17,12 @@ import java.util.Optional;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+
     @GetMapping("/getAll")
-    public List<Article> getAllArticles(){
+    public List<Article> getAllArticles() {
         return articleService.getAllArticles();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Long id) {
         Optional<Article> article = articleService.findById(id);
@@ -37,11 +39,21 @@ public class ArticleController {
         }
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<Article> updateArticle(@RequestBody Article updateArticleRequest) {
+        try {
+            Article updatedArticle = articleService.updateArticle(updateArticleRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(updatedArticle);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public boolean deleteArticleById(@PathVariable Long id) {
         try {
-             return articleService.deleteById(id);
-        }catch (Exception e) {
+            return articleService.deleteById(id);
+        } catch (Exception e) {
             return false;
         }
 

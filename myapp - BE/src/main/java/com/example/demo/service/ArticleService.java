@@ -35,6 +35,15 @@ public class ArticleService {
         }
     }
 
+    public Article updateArticle(Article article) {
+        try {
+            return articleRepository.save(article);
+        } catch (DataAccessException e) {
+            System.out.println("Error while updating Article object: " + e.getMessage());
+            throw new RuntimeException("Failed to update article", e);
+        }
+    }
+
     public boolean deleteById(Long id) {
         try {
             articleRepository.deleteById(id);
