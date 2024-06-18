@@ -15,7 +15,6 @@ import axios from 'axios';
 export const getArticles = async () => {
 	try {
 		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + 'getAll');
-		console.log(response.data)
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching articles', error);
@@ -27,7 +26,6 @@ export const getArticleById = async (id) => {
 	try {
 
 		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + id);
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error(`Error fetching article with id ${id}`, error);
@@ -91,7 +89,6 @@ const Article = () => {
 
 			fetchArticle();
 		}
-
 
 	}, []);
 
