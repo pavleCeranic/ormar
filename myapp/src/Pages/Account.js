@@ -1,5 +1,5 @@
 import './Account.css';
-import BestSellerContainer from '../Components/BestSellerContainer.js'
+import ArticleGroupContainer from '../Components/ArticleGroupContainer.js'
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
@@ -10,6 +10,7 @@ const Account = (props) => {
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('ormar');
+	const navigate = useNavigate();
 
 	const handleTabChange = (newActiveTab, oldActiveTab) => {
 
@@ -22,10 +23,10 @@ const Account = (props) => {
 	}
 
 	useEffect(() => {
-		
+
 		// axios.get('getUser&' + {userId})
 		// 	.then(response => {
-		// 	handle data 
+		// 	handle data
 		// 	})
 		// 	.catch(error => {
 
@@ -44,9 +45,9 @@ const Account = (props) => {
 					<div> X Banjaluka</div>
 					<div>Posljednji put vidjen u 13:44</div>
 				</div>
-				<div>
-					<div></div>
-					<button>Edit account</button>
+				<div className='flex flex-col'>
+					<button onClick={()=>{navigate('/publishnewarticle')}} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
+					<button className='hover:bg-black hover:bg-opacity-10'>Edit account</button>
 				</div>
 			</div>
 			<div className='flex flex-col h-full w-3/5 mb-4 shadow-2xl'>
@@ -56,7 +57,7 @@ const Account = (props) => {
 				</div>
 				<div className='overflow-hidden h-full mt-3'>
 					{activeTab === 'ormar' ?
-						<BestSellerContainer title='' />
+						<ArticleGroupContainer title='' />
 						: <Reviews />
 					}
 				</div>
