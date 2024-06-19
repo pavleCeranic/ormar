@@ -18,25 +18,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String username;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    private String username;
+    private String password;
     private LocalDateTime dateAdded;
     @Column(nullable = true)
     private Cities city;
     @Column(nullable = true)
+    private String sex;
+    @Column(nullable = true)
     private Integer rating;
-
     @Column(nullable = true)
     @Lob
     private byte[] profileImage;
-    @Column(name = "favourites_articles", columnDefinition = "integer[]")
+    @Column(nullable = true, name = "favourites_articles", columnDefinition = "integer[]")
     private List<Integer> favourites;
-    @Column(name = "active_articles", columnDefinition = "integer[]")
+    @Column(nullable = true, name = "active_articles", columnDefinition = "integer[]")
     private List<Integer> activeArticles;
-    @Column(name = "finished_articles", columnDefinition = "integer[]")
+    @Column(nullable = true, name = "finished_articles", columnDefinition = "integer[]")
     private List<Integer> finishedArticles;
 
     public User() {
@@ -46,17 +47,17 @@ public class User {
     public void checkValidity() throws Exception {
 
         String errorMsg = "";
-        if (this.name.isBlank()) {
-            errorMsg += "Name cannot be empty!__";
-        }
-
-        if (this.email.isBlank()) {
-            errorMsg += "Email cannot be empty!__";
-        }
-
-        if (this.username.isBlank()) {
-            errorMsg += "Username cannot be empty!";
-        }
+//        if (this.password.isBlank()) {
+//            errorMsg += "Password cannot be empty!__";
+//        }
+//
+//        if (this.email.isBlank()) {
+//            errorMsg += "Email cannot be empty!__";
+//        }
+//
+//        if (this.username.isBlank()) {
+//            errorMsg += "Username cannot be empty!";
+//        }
 
 
         if (!errorMsg.isBlank()) {

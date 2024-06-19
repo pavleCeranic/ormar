@@ -1,6 +1,7 @@
 import './LoginRegistration.css';
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { createUser } from './User';
 // import axios from 'axios';
 
 
@@ -138,26 +139,33 @@ const LoginRegistration = () => {
 
 	}
 
-	const handleSubmit = (e) => {
+	const handleLogin = (e) => {
 		e.preventDefault();
 
 		navigate('/account')
 
 		// console.log('e', formData)
-		// axios.post('___', formData)
-		// 	.then(response => {
-		// 		console.log('Form submitted successfully:', response.data);
-		// 		// Clear the form after successful submission
-		// 		setFormData({
-		// 			name: '',
-		// 			email: '',
-		// 			message: ''
-		// 		});
-		// 	})
-		// 	.catch(error => {
-		// 		console.error('Error submitting form:', error);
-		// 	});
 
+
+	}
+
+	const handleRegister = (e) => {
+		e.preventDefault();
+
+
+
+		const requestCreateUser = async () => {
+			try {
+				const createdUser = await createUser(regFormData);
+				console.log(createdUser.data)
+				navigate('/account', { state: { newUser: createdUser.data } });
+			} catch (e) {
+				throw e
+			}
+
+		}
+
+		requestCreateUser();
 	}
 
 	return (
@@ -169,14 +177,14 @@ const LoginRegistration = () => {
 				</div>
 				<div className='w-full h-5/6 flex flex-col justify-center items-center'>
 					{activeTab === 'login' ? (
-						<form className='flex flex-col w-full items-center' onSubmit={handleSubmit}>
+						<form className='flex flex-col w-full items-center' onSubmit={handleLogin}>
 							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} onBlur={validateEmail} value={loginFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={loginFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<Link to="/" className=''>Forgot Your Password? </Link>
 							<button type='submit' className='bg-black text m-2 p-2 w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors'>SIGN IN</button>
 						</form>
 					) : (
-						<form className='flex flex-col w-full justify-center items-center' onSubmit={handleSubmit}>
+						<form className='flex flex-col w-full justify-center items-center' onSubmit={handleRegister}>
 							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} onBlur={validateEmail} value={regFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<input type='text' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} onBlur={validateUsernameOnBlur} value={regFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={regFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />

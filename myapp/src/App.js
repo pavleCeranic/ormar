@@ -7,7 +7,8 @@ import Heading from './Components/Heading.js';
 import Footer from './Components/Footer.js';
 import Article from './Pages/Article.js';
 import Account from './Pages/Account.js';
-import PublishNewArticle from './Pages/PublishNewArticle.js';
+import PublishAndEditArticle from './Pages/PublishAndEditArticle.js';
+import User from './Pages/User.js';
 
 function App() {
 	return (
@@ -19,7 +20,8 @@ function App() {
 					<Route path="/register" element={<LoginRegistration />} />
 					<Route path="/article" element={<Article />} />
 					<Route path="/account" element={<Account />} />
-					<Route path="/publishnewarticle" element={<PublishNewArticle />} />
+					<Route path="/publishandeditarticle" element={<PublishAndEditArticle />} />
+					<Route path="/user" element={<User />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>

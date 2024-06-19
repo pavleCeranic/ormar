@@ -1,7 +1,7 @@
 import './Account.css';
 import ArticleGroupContainer from '../Components/ArticleGroupContainer.js'
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 
 const Account = (props) => {
@@ -11,6 +11,8 @@ const Account = (props) => {
 	const secondDivRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('ormar');
 	const navigate = useNavigate();
+	const location = useLocation();
+	const user = location.state?.newUser;
 
 	const handleTabChange = (newActiveTab, oldActiveTab) => {
 
@@ -40,14 +42,14 @@ const Account = (props) => {
 			<div className='flex flex-row h-56 w-3/5 justify-around items-center'>
 				<UserIcon size='account' />
 				<div className='flex flex-col flex-1'>
-					<div className='text-3xl'>Svetozar Markovic</div>
+					<div className='text-3xl'>{user?.username || 'Svetozar Markovic'}</div>
 					<br />
 					<div> X Banjaluka</div>
 					<div>Posljednji put vidjen u 13:44</div>
 				</div>
 				<div className='flex flex-col'>
-					<button onClick={()=>{navigate('/publishnewarticle')}} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
-					<button className='hover:bg-black hover:bg-opacity-10'>Edit account</button>
+					<button onClick={()=>{navigate('/publishandeditarticle')}} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
+					<button onClick={()=>{navigate('/user', { state: { user: user } })}} className='hover:bg-black hover:bg-opacity-10'>Uredi Detalje</button>
 				</div>
 			</div>
 			<div className='flex flex-col h-full w-3/5 mb-4 shadow-2xl'>
@@ -120,8 +122,3 @@ const UserIcon = (props) => {
 }
 
 export default Account;
-
-
-/*
-
-*/
