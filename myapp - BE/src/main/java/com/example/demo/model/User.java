@@ -1,29 +1,31 @@
 package com.example.demo.model;
 
 import com.example.demo.model.enumerations.Cities;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
-@Data
 @Table(name = "\"user\"")
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
-    private LocalDateTime dateAdded;
+    private final LocalDateTime dateAdded = LocalDateTime.now();
     @Column(nullable = true)
     private Cities city;
     @Column(nullable = true)
@@ -39,31 +41,74 @@ public class User {
     private List<Integer> activeArticles;
     @Column(nullable = true, name = "finished_articles", columnDefinition = "integer[]")
     private List<Integer> finishedArticles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "authority")
+    private Set<String> authorities = new HashSet<>();
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     public User() {
-        this.dateAdded = LocalDateTime.now();
     }
 
-    public void checkValidity() throws Exception {
+    public User(@JsonProperty("username") String username,
+                @JsonProperty("password") String password,
+                @JsonProperty("email") String email,
+                @JsonProperty("authorities") Set<String> authorities ){
 
-        String errorMsg = "";
-//        if (this.password.isBlank()) {
-//            errorMsg += "Password cannot be empty!__";
-//        }
-//
-//        if (this.email.isBlank()) {
-//            errorMsg += "Email cannot be empty!__";
-//        }
-//
-//        if (this.username.isBlank()) {
-//            errorMsg += "Username cannot be empty!";
-//        }
-
-
-        if (!errorMsg.isBlank()) {
-            throw new Exception(errorMsg);
-        }
+        this.password = password;
+        this.username = username;
+        this.email = email;
+        this.enabled = true;
+        this.authorities = authorities;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
 
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities.stream().map(SimpleGrantedAuthority::new).toList();
+    }
+
+    public void setAuthorities(Set<String> newAuthorities) { // TODO: for protected endpoint that creates admins
+        authorities = newAuthorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

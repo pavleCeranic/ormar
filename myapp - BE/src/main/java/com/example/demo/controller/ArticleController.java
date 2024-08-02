@@ -14,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/article")
 @AllArgsConstructor
+@CrossOrigin
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
