@@ -1,7 +1,8 @@
 import './LoginRegistration.css';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createUser } from './User';
+import { createUser, login } from './User';
+import { AuthContext } from '../context/AuthContext';
 // import axios from 'axios';
 
 
@@ -9,10 +10,10 @@ const LoginRegistration = () => {
 
 	const initialState = {
 		username: '',
-		email: '',
 		password: ''
 	}
 
+	const aCotnext = useContext(AuthContext)
 	const navigate = useNavigate();
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
@@ -21,6 +22,7 @@ const LoginRegistration = () => {
 	const [activeTab, setActiveTab] = useState('login');
 	const [loginFormData, setLoginFormData] = useState(initialState);
 	const [regFormData, setRegFormData] = useState(initialState);
+	// const [renderProceed, setRenderProceed] = useState(false);
 
 	const handleTabClick = (newActiveTab, oldActiveTab, skip = false) => {
 
@@ -62,9 +64,13 @@ const LoginRegistration = () => {
 	};
 
 	useEffect(() => {
-		// decide if user is loged in or not and direct user to Account or stay here to login/register
+
+		if (aCotnext.loggedUser) {
+			// navigate('/account', { state: { newUser: aCotnext.loggedUser } });
+		}
 
 		handleTabClick(firstDivRef, secondDivRef, true);
+
 	}, []);
 
 	const validateEmail = (e, fromTabClick = false) => {
@@ -142,10 +148,30 @@ const LoginRegistration = () => {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		navigate('/account')
+		// loader
 
-		// console.log('e', formData)
+		const sendLogin = async () => {
+			try {
+				const response = await login(loginFormData);
 
+				if (response.data === 'fail') {
+					alert('credentials not ok');   //TODO: instead of this set the fields style to red to indicate failure
+					return;
+				}
+
+				if (response.status === 200) {
+					aCotnext.topLogin(response.data);
+					navigate('/account', { state: { newUser: response.data } });
+				}
+
+			} catch (e) {
+
+				// login Invalid
+			}
+
+		}
+
+		sendLogin();
 
 	}
 
@@ -178,10 +204,10 @@ const LoginRegistration = () => {
 				<div className='w-full h-5/6 flex flex-col justify-center items-center'>
 					{activeTab === 'login' ? (
 						<form className='flex flex-col w-full items-center' onSubmit={handleLogin}>
-							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} onBlur={validateEmail} value={loginFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
-							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={loginFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='text' name='username' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={loginFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='password' name='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={loginFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<Link to="/" className=''>Forgot Your Password? </Link>
-							<button type='submit' className='bg-black text m-2 p-2 w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors'>SIGN IN</button>
+							<button type='submit' className='bg-black text m-2 p-2 w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors' onClick={handleLogin} >SIGN IN</button>
 						</form>
 					) : (
 						<form className='flex flex-col w-full justify-center items-center' onSubmit={handleRegister}>

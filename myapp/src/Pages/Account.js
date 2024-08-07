@@ -1,8 +1,9 @@
 import './Account.css';
 import ArticleGroupContainer from '../Components/ArticleGroupContainer.js'
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import { AuthContext } from '../context/AuthContext.js';
+import { logout } from './User.js';
 
 const Account = (props) => {
 
@@ -13,6 +14,7 @@ const Account = (props) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const user = location.state?.newUser;
+	const aCotnext = useContext(AuthContext);
 
 	const handleTabChange = (newActiveTab, oldActiveTab) => {
 
@@ -24,17 +26,26 @@ const Account = (props) => {
 		}
 	}
 
+	const handleLogout = () => {
+		const tryLogout = async () => {
+			const response = await logout();
+
+			if (response.status === 200) {
+				navigate('/');
+			}
+		}
+
+		tryLogout();
+	}
+
 	useEffect(() => {
 
-		// axios.get('getUser&' + {userId})
-		// 	.then(response => {
-		// 	handle data
-		// 	})
-		// 	.catch(error => {
-
-		// 	});
+		if (!aCotnext.loggedUser) {
+			navigate('/register')
+		}
 
 		handleTabChange(firstDivRef, secondDivRef)
+
 	}, [])
 
 	return (
@@ -42,14 +53,14 @@ const Account = (props) => {
 			<div className='flex flex-row h-56 w-3/5 justify-around items-center'>
 				<UserIcon size='account' />
 				<div className='flex flex-col flex-1'>
-					<div className='text-3xl'>{user?.username || 'Svetozar Markovic'}</div>
+					<div className='text-3xl'>{aCotnext.loggedUser?.username || 'Svetozar Markovic'}</div>
 					<br />
-					<div> X Banjaluka</div>
-					<div>Posljednji put vidjen u 13:44</div>
+					<div>{aCotnext.loggedUser?.city || ''}</div>
 				</div>
 				<div className='flex flex-col'>
-					<button onClick={()=>{navigate('/publishandeditarticle')}} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
-					<button onClick={()=>{navigate('/user', { state: { user: user } })}} className='hover:bg-black hover:bg-opacity-10'>Uredi Detalje</button>
+					<button onClick={() => { navigate('/publishandeditarticle') }} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
+					<button onClick={() => { navigate('/user', { state: { user: aCotnext.loggedUser } }) }} className='hover:bg-black hover:bg-opacity-10'>Uredi Detalje</button>
+					<button onClick={handleLogout} className='hover:bg-black hover:bg-opacity-10'>Odjavi se</button>
 				</div>
 			</div>
 			<div className='flex flex-col h-full w-3/5 mb-4 shadow-2xl'>

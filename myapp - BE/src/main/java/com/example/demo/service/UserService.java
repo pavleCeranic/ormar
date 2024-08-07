@@ -40,6 +40,8 @@ public class UserService implements UserDetailsService {
         try {
             return userRepository.save(user);
         } catch (Exception e) {
+            System.out.println("Ne mogu da sacuvam promjene na Useru"
+            );
             throw new Exception("Failed to update user: ", e);
         }
     }
@@ -53,7 +55,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);

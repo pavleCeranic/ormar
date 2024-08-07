@@ -4,6 +4,40 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+export const login = async (user) => {
+
+	const response = await axios.post(process.env.REACT_APP_API_USER_URL + 'login',
+		new URLSearchParams({
+			username: user.username,
+			password: user.password
+
+		}), {
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		withCredentials: true
+	}
+	);
+
+	return response;
+
+}
+
+export const logout = async () => {
+	try {
+		const response = await axios.get(process.env.REACT_APP_API_BASE_URL + 'logout', {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			withCredentials: true
+		});
+		return response;
+	} catch (e) {
+		console.error('Error on logout: ', e);
+		throw e;
+	}
+}
+
 export const getUserById = async (userId) => {
 
 	try {
@@ -19,7 +53,13 @@ export const getUserById = async (userId) => {
 export const createUser = async (user) => {
 
 	try {
-		const response = await axios.post(process.env.REACT_APP_API_USER_URL + 'create', user);
+		const response = await axios.post(process.env.REACT_APP_API_USER_URL + 'create', {
+			body: user,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			withCredentials: true
+	});
 		return response;
 	} catch (e) {
 		console.error('Error creating new User. ', e);
@@ -31,7 +71,13 @@ export const createUser = async (user) => {
 export const updateUser = async (user) => {
 
 	try {
-		const response = await axios.post(process.env.REACT_APP_API_USER_URL + 'update', user);
+		const response = await axios.post(process.env.REACT_APP_API_USER_URL + 'update', {
+			body: user,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			withCredentials: true
+	});
 		return response;
 	} catch (e) {
 		console.log('Error updating user: ', e);
@@ -124,7 +170,7 @@ const User = () => {
 				const response = await updateUser(userInfo);
 				alert("Profile updated succesfully.")
 			} catch (error) {
-				console.error('Error creating an article', error);
+				console.error('Error updating user', error);
 			}
 		};
 		requestUpdateUser();

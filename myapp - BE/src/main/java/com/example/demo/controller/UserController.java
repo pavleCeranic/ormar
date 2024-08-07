@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -45,9 +46,25 @@ public class UserController {
 
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public RedirectView login() {
         return new RedirectView("http://localhost:3000/register");
+    }
+
+    @GetMapping("/login-success")
+    public User successLogin(Principal principal) {
+        return (User) ((Authentication) principal).getPrincipal();
+    }
+
+    @GetMapping("/login-failure")
+    public String loginFail() {
+
+        return "fail";
+    }
+
+    @GetMapping("/logout-success")
+    public String logout() {
+        return "good logout";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -68,6 +85,16 @@ public class UserController {
         return "good " + principal.getName() + ' ' + authorities.toString();
     }
 
+    @GetMapping("/get/{username}")
+    public User getUserByUsername(@PathVariable String username, Principal principal) throws Exception {
+        if (!username.equals(principal.getName())) {
+            throw new Exception("Not Logged in");
+        } else {
+            return userService.loadUserByUsername(username);
+        }
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) throws Exception {
         Optional<User> user = userService.getUserById(id);
@@ -77,6 +104,9 @@ public class UserController {
     @PostMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody User updateUserRequest) throws Exception {
         try {
+            System.out.println(updateUserRequest.getUsername());
+            System.out.println(updateUserRequest.getPassword());
+            System.out.println(updateUserRequest.getUsername());
             User updatedUser = userService.updateUser(updateUserRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
         } catch (Exception e) {

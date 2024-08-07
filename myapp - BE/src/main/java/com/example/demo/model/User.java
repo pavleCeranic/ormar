@@ -56,7 +56,8 @@ public class User implements UserDetails {
     public User(@JsonProperty("username") String username,
                 @JsonProperty("password") String password,
                 @JsonProperty("email") String email,
-                @JsonProperty("authorities") Set<String> authorities ){
+                @JsonProperty("authorities") Set<String> authorities,
+                @JsonProperty("city") String city){
 
         this.password = password;
         this.username = username;
@@ -66,6 +67,7 @@ public class User implements UserDetails {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
+        this.city = Cities.valueOf(city);
 
     }
 
@@ -110,5 +112,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public Cities getCity() {
+        return city;
     }
 }
