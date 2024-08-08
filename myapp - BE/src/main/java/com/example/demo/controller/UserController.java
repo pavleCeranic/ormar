@@ -15,11 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.security.SecureRandom;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -34,14 +30,20 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<User> createUser(@RequestBody LinkedHashMap<String, Object> user) {
 
         try {
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            User createdUser = userService.createUser(user);
+            User newUser = new User(
+                    user.get("username").toString(),
+                    bCryptPasswordEncoder.encode(user.get("password").toString()),
+                    user.get("email").toString(),
+                    new HashSet<>(Set.of("ROLE_USER"))
+            );
+            User createdUser = userService.createUser(newUser);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null); // TODO: better response in case of failure
         }
 
     }
@@ -59,7 +61,7 @@ public class UserController {
     @GetMapping("/login-failure")
     public String loginFail() {
 
-        return "fail";
+        return "fail"; // TODO: better handling
     }
 
     @GetMapping("/logout-success")
@@ -76,7 +78,7 @@ public class UserController {
     }
 
     @GetMapping("/mydomain")
-    public String mydomain(HttpSession session, Principal principal) throws Exception {
+    public String mydomain(Principal principal) throws Exception {
         User user = (User) ((Authentication) principal).getPrincipal();
 
         // Get authorities

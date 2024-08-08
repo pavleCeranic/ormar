@@ -8,9 +8,15 @@ import { AuthContext } from '../context/AuthContext';
 
 const LoginRegistration = () => {
 
-	const initialState = {
+	const initialLogin = {
 		username: '',
 		password: ''
+	}
+
+	const initialRegister = {
+		username: '',
+		password: '',
+		email: ''
 	}
 
 	const aCotnext = useContext(AuthContext)
@@ -20,9 +26,8 @@ const LoginRegistration = () => {
 	const emailRef = useRef(null);
 	const usernameRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('login');
-	const [loginFormData, setLoginFormData] = useState(initialState);
-	const [regFormData, setRegFormData] = useState(initialState);
-	// const [renderProceed, setRenderProceed] = useState(false);
+	const [loginFormData, setLoginFormData] = useState(initialLogin);
+	const [regFormData, setRegFormData] = useState(initialRegister);
 
 	const handleTabClick = (newActiveTab, oldActiveTab, skip = false) => {
 
@@ -34,7 +39,7 @@ const LoginRegistration = () => {
 
 			if (skip) return;
 
-			validateEmail(emailRef, true);
+			// validateEmail(emailRef, true);
 
 			// emailRef.current.style.outline = '';
 		}
@@ -66,7 +71,7 @@ const LoginRegistration = () => {
 	useEffect(() => {
 
 		if (aCotnext.loggedUser) {
-			// navigate('/account', { state: { newUser: aCotnext.loggedUser } });
+			navigate('/account', { state: { newUser: aCotnext.loggedUser } });
 		}
 
 		handleTabClick(firstDivRef, secondDivRef, true);
@@ -147,42 +152,32 @@ const LoginRegistration = () => {
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-
 		// loader
-
 		const sendLogin = async () => {
 			try {
 				const response = await login(loginFormData);
-
 				if (response.data === 'fail') {
 					alert('credentials not ok');   //TODO: instead of this set the fields style to red to indicate failure
 					return;
 				}
-
 				if (response.status === 200) {
 					aCotnext.topLogin(response.data);
 					navigate('/account', { state: { newUser: response.data } });
 				}
-
 			} catch (e) {
-
 				// login Invalid
 			}
-
 		}
-
 		sendLogin();
-
 	}
 
 	const handleRegister = (e) => {
 		e.preventDefault();
 
-
-
 		const requestCreateUser = async () => {
 			try {
 				const createdUser = await createUser(regFormData);
+				debugger
 				console.log(createdUser.data)
 				navigate('/account', { state: { newUser: createdUser.data } });
 			} catch (e) {
@@ -211,7 +206,7 @@ const LoginRegistration = () => {
 						</form>
 					) : (
 						<form className='flex flex-col w-full justify-center items-center' onSubmit={handleRegister}>
-							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} onBlur={validateEmail} value={regFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={regFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<input type='text' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} onBlur={validateUsernameOnBlur} value={regFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={regFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<Link to="/account" className='' onClick={() => { handleTabClick(firstDivRef, secondDivRef) }}>Already have an Account? </Link>

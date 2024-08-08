@@ -1,21 +1,17 @@
 package com.example.demo.model;
 
 import com.example.demo.model.enumerations.Cities;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "\"user\"")
 @Entity
-public class User implements UserDetails {
+public class User implements UserDetails  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,22 +49,15 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(@JsonProperty("username") String username,
-                @JsonProperty("password") String password,
-                @JsonProperty("email") String email,
-                @JsonProperty("authorities") Set<String> authorities,
-                @JsonProperty("city") String city){
-
-        this.password = password;
-        this.username = username;
+    public User(String username, String password, String email, Set<String> authorities) {
         this.email = email;
+        this.username = username;
+        this.password = password;
         this.enabled = true;
         this.authorities = authorities;
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
-        this.city = Cities.valueOf(city);
-
     }
 
     @Override

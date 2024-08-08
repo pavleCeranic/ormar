@@ -31,6 +31,7 @@ const Account = (props) => {
 			const response = await logout();
 
 			if (response.status === 200) {
+				aCotnext.topLogout();
 				navigate('/');
 			}
 		}
