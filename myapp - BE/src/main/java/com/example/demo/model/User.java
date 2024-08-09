@@ -60,6 +60,17 @@ public class User implements UserDetails  {
         this.credentialsNonExpired = true;
     }
 
+    // updating user from editAccount functionality
+    public User(
+                String email,
+                String city,
+                String sex ) {
+
+        this.email = email;
+        this.city = Cities.valueOf(city);
+        this.sex = sex;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities.stream().map(SimpleGrantedAuthority::new).toList();
@@ -106,4 +117,53 @@ public class User implements UserDetails  {
     public Cities getCity() {
         return city;
     }
+
+    public void setCity(String city) {
+        this.city = Cities.valueOf(city);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public LocalDateTime getDateAdded() {
+        return dateAdded;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public List<Integer> getFavourites() {
+        return favourites;
+    }
+
+    public List<Integer> getActiveArticles() {
+        return activeArticles;
+    }
+
+    public List<Integer> getFinishedArticles() {
+        return finishedArticles;
+    }
+
 }

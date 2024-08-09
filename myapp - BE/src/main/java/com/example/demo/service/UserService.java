@@ -1,15 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
-import com.example.demo.repository.ArticleRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,11 +18,12 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public User createUser(User newUser) throws Exception {
         try {
             return userRepository.save(newUser);
         } catch (Exception e) {
-            throw new Exception("Failed to create article", e);
+            throw new Exception("Failed to create user", e);
         }
     }
 
@@ -36,6 +35,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    @Transactional
     public User updateUser(User user) throws Exception {
         try {
             return userRepository.save(user);

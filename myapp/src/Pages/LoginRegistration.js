@@ -70,6 +70,10 @@ const LoginRegistration = () => {
 
 	useEffect(() => {
 
+		setTimeout(() => {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}, 150);
+
 		if (aCotnext.loggedUser) {
 			navigate('/account', { state: { newUser: aCotnext.loggedUser } });
 		}

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -104,12 +103,24 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestBody User updateUserRequest) throws Exception {
+    public ResponseEntity<User> updateUser(@RequestBody LinkedHashMap<String, Object> updateuserRequest, Principal principal) throws Exception {
+
         try {
-            System.out.println(updateUserRequest.getUsername());
-            System.out.println(updateUserRequest.getPassword());
-            System.out.println(updateUserRequest.getUsername());
-            User updatedUser = userService.updateUser(updateUserRequest);
+            LinkedHashMap<String, Object> updateUserMap = (LinkedHashMap<String, Object>) updateuserRequest.get("body");
+
+            User existingUser = userService.loadUserByUsername(updateUserMap.get("username").toString());
+
+            if (updateUserMap.get("city").toString() != null && updateUserMap.get("city") != "") {
+                existingUser.setCity(updateUserMap.get("city").toString());
+            }
+
+            if (updateUserMap.get("sex").toString() != null && updateUserMap.get("sex") != "") {
+                System.out.println(updateUserMap.get("sex").toString());
+                existingUser.setSex(updateUserMap.get("sex").toString());
+            }
+
+            User updatedUser = userService.updateUser(existingUser);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(updatedUser);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
