@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createArticle, updateArticle } from "./Article";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const PublishNewArticle = () => {
+const PublishAndEditArticle = () => {
 
 	const [articleInfo, setArticleInfo] = useState({
 		name: '',
@@ -188,4 +188,4 @@ const PublishNewArticle = () => {
 
 }
 
-export default PublishNewArticle
+export default PublishAndEditArticle
