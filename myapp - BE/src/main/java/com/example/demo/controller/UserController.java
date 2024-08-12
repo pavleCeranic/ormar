@@ -108,14 +108,18 @@ public class UserController {
         try {
             LinkedHashMap<String, Object> updateUserMap = (LinkedHashMap<String, Object>) updateuserRequest.get("body");
 
-            User existingUser = userService.loadUserByUsername(updateUserMap.get("username").toString());
+            Optional<User> existingUserWrapper = userService.getUserById(Long.decode(updateUserMap.get("id").toString()));
+            User existingUser = new User();
+
+            if (existingUserWrapper.isPresent()) {
+                existingUser = existingUserWrapper.get();
+            }
 
             if (updateUserMap.get("city").toString() != null && updateUserMap.get("city") != "") {
                 existingUser.setCity(updateUserMap.get("city").toString());
             }
 
             if (updateUserMap.get("sex").toString() != null && updateUserMap.get("sex") != "") {
-                System.out.println(updateUserMap.get("sex").toString());
                 existingUser.setSex(updateUserMap.get("sex").toString());
             }
 

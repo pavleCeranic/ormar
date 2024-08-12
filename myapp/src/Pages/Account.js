@@ -7,7 +7,6 @@ import { logout } from './User.js';
 
 const Account = (props) => {
 
-	const userId = props.reviewerId
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('ormar');
