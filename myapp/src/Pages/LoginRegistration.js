@@ -194,8 +194,8 @@ const LoginRegistration = () => {
 	}
 
 	return (
-		<div className='h-[100vh] w-full flex justify-center items-center '>
-			<div className='h-3/5 w-2/5 shadow-2xl'>
+		<div className='landscape:h-full h-[100vh] w-full flex justify-center items-center '>
+			<div className='h-[60vh] min-h-96 w-11/12 md:w-3/5 lg:w-2/5 shadow-2xl landscape:mt-36 landscape:mb-24'>
 				<div className='flex flex-row text-center cursor-pointer w-full h-1/6 justify-around font-semibold text-xl'>
 					<div id='myDiv' ref={firstDivRef} className='content-center bg-inactiveGrey w-full h-full hover:bg-gray-100' onClick={() => { handleTabClick(firstDivRef, secondDivRef) }} >Login</div>
 					<div id='tab1' ref={secondDivRef} className='content-center bg-inactiveGrey w-full h-full hover:opacity-95' onClick={() => { handleTabClick(secondDivRef, firstDivRef) }} >Create Account</div>
@@ -203,18 +203,18 @@ const LoginRegistration = () => {
 				<div className='w-full h-5/6 flex flex-col justify-center items-center'>
 					{activeTab === 'login' ? (
 						<form className='flex flex-col w-full items-center' onSubmit={handleLogin}>
-							<input type='text' name='username' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={loginFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
-							<input type='password' name='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={loginFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='text' name='username' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={loginFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-11/12 sm:w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='password' name='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={loginFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-11/12 sm:w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<Link to="/" className=''>Forgot Your Password? </Link>
-							<button type='submit' className='bg-black text m-2 p-2 w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors' onClick={handleLogin} >SIGN IN</button>
+							<button type='submit' className='bg-black text m-2 p-2 w-11/12 sm:w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors' onClick={handleLogin} >SIGN IN</button>
 						</form>
 					) : (
 						<form className='flex flex-col w-full justify-center items-center' onSubmit={handleRegister}>
-							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={regFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
-							<input type='text' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} onBlur={validateUsernameOnBlur} value={regFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
-							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={regFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='text' id='email' ref={emailRef} placeholder='Email' onChange={handleInputChange} /*onBlur={validateEmail}*/ value={regFormData.email} className='outline-0 shadow-2xl m-2 p-2 w-11/12 sm:w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='text' id='username' ref={usernameRef} placeholder='Username' onChange={handleInputChange} onBlur={validateUsernameOnBlur} value={regFormData.username} className='outline-0 shadow-2xl m-2 p-2 w-11/12 sm:w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
+							<input type='password' id='password' placeholder='Password' onChange={handleInputChange} onBlur={validatePasswordOnBlur} value={regFormData.password} className='outline-0 shadow-2xl m-2 p-2 w-11/12 sm:w-4/5 focus:shadow-lg focus:scale-105 transition-all duration-200 ease-in-out' />
 							<Link to="/account" className='' onClick={() => { handleTabClick(firstDivRef, secondDivRef) }}>Already have an Account? </Link>
-							<button type='submit' className='bg-black text m-2 p-2 w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors'>REGISTER</button>
+							<button type='submit' className='bg-black text m-2 p-2 w-11/12 sm:w-4/5 cursor-pointer text-white text-center hover:bg-buttonYellow transition-colors'>REGISTER</button>
 						</form>
 					)}
 
