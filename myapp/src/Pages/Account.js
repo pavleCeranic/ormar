@@ -5,14 +5,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.js';
 import { logout } from './User.js';
 
-const Account = (props) => {
+const Account = () => {
 
 	const firstDivRef = useRef(null);
 	const secondDivRef = useRef(null);
 	const [activeTab, setActiveTab] = useState('ormar');
+	const [user, setUser] = useState({});
 	const navigate = useNavigate();
 	const location = useLocation();
-	const user = location.state?.newUser;
 	const aCotnext = useContext(AuthContext);
 
 	const handleTabChange = (newActiveTab, oldActiveTab) => {
@@ -30,6 +30,7 @@ const Account = (props) => {
 			const response = await logout();
 
 			if (response.status === 200) {
+				setUser({});
 				aCotnext.topLogout();
 				navigate('/');
 			}
@@ -40,31 +41,37 @@ const Account = (props) => {
 
 	useEffect(() => {
 
-		if (!aCotnext.loggedUser) {
-			navigate('/register')
+		if (location.state?.ownerUsername && location.state?.ownerUsername !== user.username) {
+			setUser({
+				username: location.state?.ownerUsername,
+				id: location.state?.userId
+			});
+		} else if (aCotnext.loggedUser) {
+			setUser(aCotnext.loggedUser);
 		}
 
 		handleTabChange(firstDivRef, secondDivRef)
 
-	}, [])
+	});
 
 	return (
-		<div className='flex flex-col content-center mt-24 items-center'>
-			<div className='flex flex-row h-56 w-3/5 justify-around items-center'>
-				<UserIcon size='account' />
-				<div className='flex flex-col flex-1'>
-					<div className='text-3xl'>{aCotnext.loggedUser?.username || 'Svetozar Markovic'}</div>
-					<br />
-					<div>{aCotnext.loggedUser?.city || ''}</div>
+		<div className='flex flex-col w-full content-center mt-16 items-center'>
+			<div className='flex flex-wrap w-11/12 lg:h-56 lg:w-3/5 justify-around items-center'>
+				<UserIconLarge />
+				<div className='flex flex-col flex-1 sm:w-[40vw]'>
+					<div className='text-2xl lg:text-3xl '>{user?.username}</div>
+					<div className='text-xs'> {user?.city || ''}</div>
 				</div>
-				<div className='flex flex-col'>
-					<button onClick={() => { navigate('/publishandeditarticle') }} className='hover:bg-black hover:bg-opacity-10'>Objavi Artikl</button>
-					<button onClick={() => { navigate('/user', { state: { user: aCotnext.loggedUser } }) }} className='hover:bg-black hover:bg-opacity-10'>Uredi Detalje</button>
-					<button onClick={handleLogout} className='hover:bg-black hover:bg-opacity-10'>Odjavi se</button>
+				{aCotnext.loggedUser?.id === user.id ? <div className='flex flex-col h-28 w-full sm:w-44 md:w-44 lg:w-44 shadow-lg rounded-md text-center self-center'>
+					<button onClick={() => { navigate('/publishandeditarticle') }} className='hover:bg-black hover:bg-opacity-10 w-full h-full'>Objavi Artikl</button>
+					<button onClick={() => { navigate('/user', { state: { user: aCotnext.loggedUser } }) }} className='hover:bg-black hover:bg-opacity-10 w-full h-full'>Uredi Detalje</button>
+					<button onClick={handleLogout} className='hover:bg-black hover:bg-opacity-10 w-full h-full'>Odjavi se</button>
 				</div>
+				: ''}
+
 			</div>
-			<div className='flex flex-col h-full w-3/5 mb-4 shadow-2xl'>
-				<div className='flex flex-row justify-around'>
+			<div className='flex flex-col h-full w-11/12 lg:w-3/5 m-2 mb-4 shadow-2xl min-w-[250px]'>
+				<div className='flex flex-row sm:justify-around'>
 					<div className=' flex justify-center items-center h-9 cursor-pointer w-full' ref={firstDivRef} onClick={() => { handleTabChange(firstDivRef, secondDivRef) }}>Ormar</div>
 					<div className=' flex justify-center items-center h-9 cursor-pointer w-full' ref={secondDivRef} onClick={() => { handleTabChange(secondDivRef, firstDivRef) }}>Ocjene</div>
 				</div>
@@ -96,7 +103,7 @@ const Reviews = () => {
 					return (
 						<div key={index} className='flex flex-col w-full  '>
 							<div className='flex flex-row w-full justify-between items-center'>
-								<UserIcon size='review' />
+								<UserIconSmall size='review' />
 								<div className='flex-1'>
 									<div className=' cursor-pointer' onClick={() => navigate('/account', { state: { id: item.reviewerId } })}>{item.reviewer}</div>
 									<div>{item.stars}</div>
@@ -115,7 +122,7 @@ const Reviews = () => {
 	)
 }
 
-const UserIcon = (props) => {
+const UserIconSmall = (props) => {
 
 	const sizeReg = {
 		account: { margin: 6, iconSize: 44, headSize: 12, shoulderW: 28, shoulderH: 16 },
@@ -127,6 +134,18 @@ const UserIcon = (props) => {
 			<div className={`flex flex-col w-${sizeReg[props.size].iconSize} h-${sizeReg[props.size].iconSize} rounded-full bg-zinc-400 items-center justify-end overflow-hidden`} >
 				<div className={`w-${sizeReg[props.size].headSize} h-${sizeReg[props.size].headSize} rounded-full bg-zinc-600 mb-2`}></div>
 				<div className={`w-${sizeReg[props.size].shoulderW} h-${sizeReg[props.size].shoulderH} rounded-3xl bg-zinc-600`}></div>
+			</div>
+		</div>
+	)
+}
+
+const UserIconLarge = () => {
+
+	return (
+		<div className={`flex m-6 ml-0`}>
+			<div className={`flex flex-col w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-zinc-400 items-center justify-end overflow-hidden`} >
+				<div className={`w-5 h-5 sm:w-8 sm:h-8 rounded-full bg-zinc-600 mb-1 sm:mb-2`}></div>
+				<div className={`w-12 h-6 sm:w-20 sm:h-9 rounded-3xl bg-zinc-600`}></div>
 			</div>
 		</div>
 	)
