@@ -1,12 +1,12 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import './Heading.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-function Heading(props) {
+function Heading() {
 
 	const aContext = useContext(AuthContext);
-	const [accountLink, setAccountLink] = useState('/register')
+	const navigate = useNavigate();
 
 	return (
 		<div className='w-full flex flex-row shadow-xl h-14 fixed top-0 z-50 bg-white text-sm sm:text-base p-3'>
@@ -14,9 +14,21 @@ function Heading(props) {
 				Logo
 			</Link>
 			<Menu label='Collections' items={['Item 1', 'Item 2', 'Item 3']} />
-			<Link to={props.user} className='self-center text-center w-44 hover:font-bold transition-all duration-200 ease-in-out'>
-				Account
-			</Link>
+			{aContext.loggedUser
+				? <button onClick={() => {
+					if (window.location.pathname === '/account') {
+						navigate(0);
+					}
+					navigate('/account', { state: { user: aContext.loggedUser } })
+				}} className='self-center text-center w-44 hover:font-bold transition-all duration-200 ease-in-out'>
+					{aContext.loggedUser.username}
+				</button>
+				:
+				<Link to='/register' className='self-center text-center w-44 hover:font-bold transition-all duration-200 ease-in-out'>
+					Uloguj se
+				</Link>
+			}
+
 		</div>
 	);
 }

@@ -54,7 +54,7 @@ function App() {
 		loading ? (<Loader />) :
 		<div className='flex flex-col overflow-x-hidden select-none'>
 			<BrowserRouter>
-				<Heading user={isAuthenticated ? '/account' : '/register'}/>
+				<Heading user={isAuthenticated}/>
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/register" element={<LoginRegistration />} />

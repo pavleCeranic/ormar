@@ -8,7 +8,7 @@ function Home() {
 	return (
 		<div className=''>
 			<CarouselContainer />
-			<ArticleGroupContainer title='Izdvojeno za tebe'/>
+			<ArticleGroupContainer title='Izdvojeno za tebe' articlesIdList={'all'} />
 		</div>
 	);
 }
