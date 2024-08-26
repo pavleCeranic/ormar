@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createArticle, updateArticle } from "./Article";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const PublishAndEditArticle = () => {
+
+	const navigate = useNavigate();
+	const location = useLocation();
+	const aCotnext = useContext(AuthContext);
+
+	if (!aCotnext.loggedUser) {
+		navigate('/register')
+	}
 
 	const [articleInfo, setArticleInfo] = useState({
 		name: '',
@@ -15,11 +24,11 @@ const PublishAndEditArticle = () => {
 		color: 'Boja',
 		size: 'size',
 		category: 'category',
-		condition: 'condition'
+		condition: 'condition',
+		ownerId: aCotnext.loggedUser.id,
+		ownerUsername: aCotnext.loggedUser.username
 	});
 
-	const navigate = useNavigate();
-	const location = useLocation();
 
 	const cities = [
 		'Grad',

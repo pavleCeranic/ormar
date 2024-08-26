@@ -32,11 +32,11 @@ public class User implements UserDetails  {
     @Lob
     private byte[] profileImage;
     @Column(nullable = true, name = "favourites_articles", columnDefinition = "integer[]")
-    private List<Integer> favourites;
+    private List<Long> favourites = new ArrayList<>();
     @Column(nullable = true, name = "active_articles", columnDefinition = "integer[]")
-    private List<Integer> activeArticles;
+    private List<Long> activeArticles = new ArrayList<>();
     @Column(nullable = true, name = "finished_articles", columnDefinition = "integer[]")
-    private List<Integer> finishedArticles;
+    private List<Long> finishedArticles = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "authority")
@@ -154,15 +154,19 @@ public class User implements UserDetails  {
         this.profileImage = profileImage;
     }
 
-    public List<Integer> getFavourites() {
+    public List<Long> getFavourites() {
         return favourites;
     }
 
-    public List<Integer> getActiveArticles() {
+    public List<Long> getActiveArticles() {
         return activeArticles;
     }
 
-    public List<Integer> getFinishedArticles() {
+    public void addActiveArticle(Long createdArticleId) {
+        this.activeArticles.add(createdArticleId);
+    }
+
+    public List<Long> getFinishedArticles() {
         return finishedArticles;
     }
 

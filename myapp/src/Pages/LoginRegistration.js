@@ -181,7 +181,6 @@ const LoginRegistration = () => {
 		const requestCreateUser = async () => {
 			try {
 				const createdUser = await createUser(regFormData);
-				debugger
 				console.log(createdUser.data)
 				navigate('/account', { state: { newUser: createdUser.data } });
 			} catch (e) {

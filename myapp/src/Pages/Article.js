@@ -22,9 +22,18 @@ export const getArticles = async () => {
 	}
 };
 
+export const getActive = async (ownerUsername) => {
+	try {
+		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + 'active/' + ownerUsername, );
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching articles', error);
+		throw error;
+	}
+};
+
 export const getArticleById = async (id) => {
 	try {
-
 		const response = await axios.get(process.env.REACT_APP_API_ARTICLE_URL + id);
 		return response.data;
 	} catch (error) {
@@ -93,7 +102,7 @@ const Article = () => {
 	}, []);
 
 	const handleClick = () => {
-		navigate('/account');
+		navigate('/account', { state: { userId: article.ownerId, ownerUsername: article.ownerUsername } });
 	}
 
 	return (
@@ -116,7 +125,7 @@ const Article = () => {
 				<div className='flex flex-row self-center w-full h-16 sm:w-full sm:self-center lg:w-72 lg:self-start shadow-lg rounded-sm content-center cursor-pointer transition-shadow duration-200 ease-in-out' onClick={handleClick} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'}>
 					<div className=' w-10 h-10 rounded-3xl  bg-black m-4 mb-0'></div>
 					<div className='flex flex-col justify-center'>
-						<div className='text-lg'>Svetozar Markovic</div>
+						<div className='text-lg'>{article.ownerUsername}</div>
 						<div className='text-xs'>Online</div>
 					</div>
 				</div>

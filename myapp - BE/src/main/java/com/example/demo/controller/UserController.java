@@ -115,11 +115,11 @@ public class UserController {
                 existingUser = existingUserWrapper.get();
             }
 
-            if (updateUserMap.get("city").toString() != null && updateUserMap.get("city") != "") {
+            if (updateUserMap.get("city") != null && updateUserMap.get("city") != "") {
                 existingUser.setCity(updateUserMap.get("city").toString());
             }
 
-            if (updateUserMap.get("sex").toString() != null && updateUserMap.get("sex") != "") {
+            if (updateUserMap.get("sex") != null && updateUserMap.get("sex") != "") {
                 existingUser.setSex(updateUserMap.get("sex").toString());
             }
 

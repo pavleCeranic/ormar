@@ -41,18 +41,25 @@ const Account = () => {
 
 	useEffect(() => {
 
-		if (location.state?.ownerUsername && location.state?.ownerUsername !== user.username) {
+		if (location.state?.ownerUsername && aCotnext.loggedUser && location.state?.ownerUsername === aCotnext.loggedUser.username) {
+			setUser(aCotnext.loggedUser);
+		} else if (location.state?.ownerUsername && aCotnext.loggedUser && location.state?.ownerUsername !== aCotnext.loggedUser.username) {
 			setUser({
 				username: location.state?.ownerUsername,
 				id: location.state?.userId
 			});
 		} else if (aCotnext.loggedUser) {
 			setUser(aCotnext.loggedUser);
+		} else if (location.state?.ownerUsername) {
+			setUser({
+				username: location.state?.ownerUsername,
+				id: location.state?.userId
+			});
 		}
 
 		handleTabChange(firstDivRef, secondDivRef)
 
-	});
+	}, []);
 
 	return (
 		<div className='flex flex-col w-full content-center mt-16 items-center'>
@@ -67,7 +74,7 @@ const Account = () => {
 					<button onClick={() => { navigate('/user', { state: { user: aCotnext.loggedUser } }) }} className='hover:bg-black hover:bg-opacity-10 w-full h-full'>Uredi Detalje</button>
 					<button onClick={handleLogout} className='hover:bg-black hover:bg-opacity-10 w-full h-full'>Odjavi se</button>
 				</div>
-				: ''}
+					: ''}
 
 			</div>
 			<div className='flex flex-col h-full w-11/12 lg:w-3/5 m-2 mb-4 shadow-2xl min-w-[250px]'>
@@ -77,7 +84,7 @@ const Account = () => {
 				</div>
 				<div className='overflow-hidden h-full mt-3'>
 					{activeTab === 'ormar' ?
-						<ArticleGroupContainer title='' />
+						user.username && <ArticleGroupContainer title='' ownerUsername={user.username} />
 						: <Reviews />
 					}
 				</div>
