@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.DTOs.UserViewDTO;
+import com.example.demo.DTOs.PublicUserDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,6 +55,25 @@ public class UserService implements UserDetailsService {
             userRepository.deleteById(id);
         } catch (Exception e) {
             throw new Exception("Failed to delete User: ", e);
+        }
+    }
+
+    public UserViewDTO getUser(String username, Principal principal) throws Exception {  // placeholder logic for getting data using DTO
+        try {
+
+            UserViewDTO user = null;
+
+            if (principal != null) {
+                User gottenUser = userRepository.findByUsername(username);
+                user = new UserViewDTO(gottenUser);
+            } else {
+                List<PublicUserDTO> publicUser = userRepository.findPublicUserByUsername(username);
+                user = new UserViewDTO(publicUser.get(0));
+            }
+
+            return user;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 

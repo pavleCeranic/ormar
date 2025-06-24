@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTOs.UserViewDTO;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -86,14 +87,10 @@ public class UserController {
         return "good " + principal.getName() + ' ' + authorities.toString();
     }
 
-    @GetMapping("/get/{username}")
-    public User getUserByUsername(@PathVariable String username, Principal principal) throws Exception {
-        if (!username.equals(principal.getName())) {
-            throw new Exception("Not Logged in");
-        } else {
-            return userService.loadUserByUsername(username);
-        }
-
+    @GetMapping("/get/{username}")              // at the moment, nothing points to this endpoint
+    public ResponseEntity<UserViewDTO> getUserByUsername(@PathVariable String username, Principal principal) throws Exception {
+        UserViewDTO user = userService.getUser(username, principal);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")

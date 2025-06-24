@@ -25,7 +25,7 @@ export const login = async (user) => {
 
 export const logout = async () => {
 	try {
-		const response = await axios.get(process.env.REACT_APP_API_BASE_URL + 'logout', {
+		const response = await axios.post(process.env.REACT_APP_API_BASE_URL + 'logout', {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
@@ -45,6 +45,18 @@ export const getUserById = async (userId) => {
 		return response;
 	} catch (e) {
 		console.error('Error getting user with id: ' + userId + ',  ' + e);
+		throw e;
+	}
+
+}
+
+export const getUserByUsername = async (username) => {
+
+	try {
+		const response = await axios.get(process.env.REACT_APP_API_USER_URL + 'get/' + username);
+		return response;
+	} catch (e) {
+		console.error('Error getting user with username: ' + username + ',  ' + e);
 		throw e;
 	}
 

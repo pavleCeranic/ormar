@@ -41,6 +41,10 @@ public class Article {
     @ElementCollection
     @Column(nullable = true)
     private List<Integer> images;
+    @Column(nullable = false)
+    private Long ownerId;
+    @Column(nullable = false)
+    private String ownerUsername;
 
     public Long getId() {
         return id;
@@ -177,13 +181,6 @@ public class Article {
     public void setOwnerUsername(String ownerUsername) {
         this.ownerUsername = ownerUsername;
     }
-
-    @Column(nullable = false)
-    private Long ownerId;
-    @Column(nullable = false)
-    private String ownerUsername;
-
-
     // Constructor
     public Article() {
         this.dateAdded = LocalDateTime.now();
