@@ -1,6 +1,6 @@
 // a page for dispaying an article
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import img from '../stolica_placeholder.png'
 import img1 from '../artiklslike/img1.jpg'
 import img2 from '../artiklslike/img2.jpg'
@@ -11,6 +11,7 @@ import img6 from '../artiklslike/img6.jpg'
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../App.css';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext.js';
 
 export const getArticles = async () => {
 	try {
@@ -76,7 +77,7 @@ const Article = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [article, setArticle] = useState({});
-	const owns = true; // is the user owner of the article that is displayed TODO: dynamicly seting
+	const aCotnext = useContext(AuthContext);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -131,7 +132,7 @@ const Article = () => {
 				</div>
 				<br />
 			</div>
-			{owns && <UserActions id={article.id} article={article} />}
+			{aCotnext?.loggedUser?.id === article.ownerId && <UserActions id={article.id} article={article} />}
 		</div>
 	);
 }
@@ -199,7 +200,7 @@ const UserActions = (props) => {
 	const handleEdit = () => {
 
 		// edit
-		navigate('/publishnewarticle', { state: { article: props.article } });
+		navigate('/publishandeditarticle', { state: { article: props.article } });
 
 	}
 
