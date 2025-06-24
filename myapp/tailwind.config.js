@@ -21,11 +21,20 @@ module.exports = {
 				'gray-light': '#d3dce6',
 				'greys': '#111827'
 			},
-		},
+			keyframes: {
+				'slide-up': {
+					'0%': { transform: 'translateY(100%)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' },
+				},
+			},
+			animation: {
+				'slide-up': 'slide-up 0.9s ease-in-out',
+			}
+		}
 	},
-	 plugins: [
-    require('tailwindcss'),
-    require('autoprefixer')
-  ],
+	plugins: [
+		require('tailwindcss'),
+		require('autoprefixer')
+	],
 }
 

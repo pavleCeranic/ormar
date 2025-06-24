@@ -1,7 +1,7 @@
 function Footer() {
 
 	return (
-		<div className='flex flex-col bg-greys text-white'>
+		<div className='flex flex-col bg-greys text-white transition-all animate-slide-up'>
 			<div className='grid grid-cols-3 footer   h-96  justify-items-center items-center'>
 				<div className='text-2xl'>
 					LOGO
