@@ -132,7 +132,7 @@ const Article = () => {
 				</div>
 				<br />
 			</div>
-			{aCotnext?.loggedUser?.id === article.ownerId && <UserActions id={article.id} article={article} />}
+			{aCotnext?.loggedUser?.id === article.ownerId && <UserActions id={article.id} article={article} />} // FIX THIS: flickers on render
 		</div>
 	);
 }
